@@ -1,0 +1,7 @@
+curl http://localhost:5001
+
+curl -d '{"targetStart":0, "targetEnd":7, "windowEnd":24}' -H "Content-Type: application/json" -X POST http://localhost:5001/train_mortality
+
+curl -d '{"id":"2137799179", "targetStart":0, "targetEnd":7, "windowEnd":24}' -H "Content-Type: application/json" -X POST http://localhost:5001/predict_mortality
+
+curl -d '{"targetStart":0, "targetEnd":7, "windowEnd":24, "saveIntermediate": true}' -H "Content-Type: application/json" -X POST http://localhost:5001/predict_mortality_for_all_ids

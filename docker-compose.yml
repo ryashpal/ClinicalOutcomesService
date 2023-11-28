@@ -5,3 +5,7 @@ services:
     image: clinical-outcome-prediction
     ports:
       - "5001:5000"
+    volumes:
+      - ./models:/python-docker/models
+      - ./data:/python-docker/data
+      - ./logs:/python-docker/logs

@@ -6,13 +6,11 @@ def readData(dataDf, targetStart, targetEnd, windowEnd):
     dataDf.anchor_time = dataDf.anchor_time.apply(lambda x: pd.to_datetime(x, format='%Y-%m-%d %H:%M:%S'))
     dataDf.death_datetime = dataDf.death_datetime.apply(lambda x: pd.to_datetime(x, format='%Y-%m-%d %H:%M:%S'))
 
-    dataDf = dataDf.drop(dataDf[dataDf['death_datetime'] < (dataDf['anchor_time'] + pd.Timedelta(hours=windowEnd))].index)
-    
     if dataDf.empty:
         return None
 
     dataDf['target'] = (dataDf['death_datetime'] > (dataDf['anchor_time'] + pd.Timedelta(days=targetStart))) & (dataDf['death_datetime'] < (dataDf['anchor_time'] + pd.Timedelta(days=targetEnd)))
-    dataDf.target.fillna(value=False, inplace=True)
+    dataDf.fillna({'target': False}, inplace=True)
 
     dropCols = [
         'person_id',

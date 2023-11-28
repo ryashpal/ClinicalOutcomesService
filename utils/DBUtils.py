@@ -25,6 +25,21 @@ def getDatamatrix():
     return df
 
 
+def getDatamatrixForTraining(windowEnd):
+    con = getConnection()
+    sql = '''select
+            *
+            from
+            ''' + AppConfig.db_details["sql_schema_name"] + '''.data_matrix
+            where
+            (death_datetime is not null and (death_datetime::timestamp > (anchor_time::timestamp + interval ' ''' + str(windowEnd) + ''' hour')))
+            or
+            (death_datetime is null)
+    '''
+    df = pd.read_sql_query(sql=sql, con=con)
+    return df
+
+
 def getDatamatrixForId(id):
     con = getConnection()
     sql = 'select * from ' + AppConfig.db_details["sql_schema_name"] + '.data_matrix where person_id = ' + id
